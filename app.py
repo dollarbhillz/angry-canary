@@ -33,5 +33,5 @@ def start_log():
 		logging.info(memory_stats)
 		logging.info(disk_io)
 
-if __name__ == '__main__':
-run(host='0.0.0.0', port=8080, debug=True)
+# if __name__ == '__main__':
+# run(host='0.0.0.0', port=8080, debug=True)
