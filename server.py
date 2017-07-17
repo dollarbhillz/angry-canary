@@ -32,3 +32,7 @@ def start_log():
 		logging.info(cpu_stat)
 		logging.info(memory_stats)
 		logging.info(disk_io)
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
+
