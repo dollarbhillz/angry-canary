@@ -1,0 +1,9 @@
+[epel]
+name=Extra Packages for Enterprise Linux 7 - $basearch
+baseurl=https://dl.fedoraproject.org/pub/epel/7/$basearch/
+mirrorlist=http://mirrors.fedoraproject.org/mirrorlist?repo=epel-7&arch=$basearch
+failovermethod=priority
+enabled=1
+protect=0
+gpgcheck=1
+gpgkey=file:///etc/yum.repos.d/epel.repo.key
