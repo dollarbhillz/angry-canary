@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import request
+#import os
 import psutil
 import time
 import logging
@@ -20,7 +21,7 @@ def get_disk_io():
 
 @app.route('/log')
 def start_log():
-	logging.basicConfig(filename="specs.log", level=logging.INFO)
+        logging.basicConfig(filename="specs.log", level=logging.INFO)
 	print("writing to log")
 	while(True):
 		time.sleep(10)
@@ -33,6 +34,10 @@ def start_log():
 		logging.info(memory_stats)
 		logging.info(disk_io)
 
+#@app.route('/stress')
+#def get_metal():
+#        os.system('stress -c 10 --timeout 60&')
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='127.0.0.1')
 
