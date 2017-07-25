@@ -1,7 +1,0 @@
-[rhel-7-extras]
-name=Extra Packages for Enterprise Linux 7 - $basearch
-baseurl=http://pulp.dist.prod.ext.phx2.redhat.com/content/dist/rhel/server/7/7Server/$basearch/extras/os/
-failovermethod=priority
-enabled=1
-protect=0
-gpgcheck=0
