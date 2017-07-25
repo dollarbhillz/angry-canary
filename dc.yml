@@ -9,7 +9,7 @@ metadata:
     app: angry-canary-docker
   name: angry-canary-docker
   namespace: angry-canary
-  resourceVersion: "10845778"
+  resourceVersion: "10869425"
   selfLink: /oapi/v1/namespaces/angry-canary/deploymentconfigs/angry-canary-docker
   uid: 412394c3-7161-11e7-9514-009b1a10019c
 spec:
@@ -17,19 +17,20 @@ spec:
     - type: "Pod"
       max:
         cpu: "2"
-        memory: "4Gi"
+        memory: "1Gi"
       min:
         cpu: "200m"
         memory: "6Mi"
     - type: "Container"
       max:
         cpu: "2"
-        memory: "4Gi"
+        memory: "1Gi"
       min:
-        cpu: "200m"
-        memory: "6Mi"
-      maxLimitRequestRatio:
-        cpu: "10"
+        cpu: "100m"
+        memory: "4Mi"
+      default:
+        cpu: "300m"
+        memory: "200Mi"
   replicas: 1
   selector:
     app: angry-canary-docker
