@@ -4,15 +4,32 @@ metadata:
   annotations:
     openshift.io/generated-by: OpenShiftNewApp
   creationTimestamp: 2017-07-25T17:46:57Z
-  generation: 5
+  generation: 6
   labels:
     app: angry-canary-docker
   name: angry-canary-docker
   namespace: angry-canary
-  resourceVersion: "10844214"
+  resourceVersion: "10845778"
   selfLink: /oapi/v1/namespaces/angry-canary/deploymentconfigs/angry-canary-docker
   uid: 412394c3-7161-11e7-9514-009b1a10019c
 spec:
+  limits:
+    - type: "Pod"
+      max:
+        cpu: "2"
+        memory: "4Gi"
+      min:
+        cpu: "200m"
+        memory: "6Mi"
+    - type: "Container"
+      max:
+        cpu: "2"
+        memory: "4Gi"
+      min:
+        cpu: "200m"
+        memory: "6Mi"
+      maxLimitRequestRatio:
+        cpu: "10"
   replicas: 1
   selector:
     app: angry-canary-docker
@@ -73,7 +90,7 @@ spec:
       lastTriggeredImage: 172.18.179.6:5000/angry-canary/angry-canary-docker@sha256:5b3f1c097b8e9b74004999713ce2ecc0cc00a71877a07a314f7d01438e784008
     type: ImageChange
 status:
-  availableReplicas: 10
+  availableReplicas: 1
   conditions:
   - lastTransitionTime: 2017-07-25T17:52:21Z
     lastUpdateTime: 2017-07-25T17:52:23Z
@@ -91,8 +108,8 @@ status:
     - type: ConfigChange
     message: config change
   latestVersion: 2
-  observedGeneration: 5
-  readyReplicas: 10
-  replicas: 10
+  observedGeneration: 6
+  readyReplicas: 1
+  replicas: 1
   unavailableReplicas: 0
-  updatedReplicas: 10
+  updatedReplicas: 1
