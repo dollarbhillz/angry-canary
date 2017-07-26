@@ -7,24 +7,16 @@ MAINTAINER Benjamin Kincaid <bkincaid@redhat.com> Benjamin Hills <bhills@redhat.
 LABEL com.redhat.component="angry-canary-docker"  
 LABEL name="angry-canary-docker"  
 LABEL version="0.1"  
+LABEL io.k8s.description="Project UpShift Angry Canary container image"
+LABEL summary="Container image for Project UpShift Angry Canary"
+LABEL io.k8s.display-name="Angry Canary"
+LABEL description="Project UpShift Angry Canary container image"
 
 # Metadata for exposed port for Flask App
-# EXPOSE 5000
+EXPOSE 5000
 
-# Add the epel 7 repo key and config and authenticate packages using key from www.getfedora.org; Add rhel 7 internal repo and extras internal repo
-# ADD epel.repo.key /etc/yum.repos.d/epel.repo.key
-# ADD epel-7.repo /etc/yum.repos.d/epel-7.repo
-# ADD rhel-7.repo /etc/yum.repos.d/rhel-7.repo
-# ADD rhel-7-extras.repo /etc/yum.repos.d/rhel-7-extras.repo
-
-# Install python packages
-RUN yum repolist > /dev/null && yum install -y  python-setuptools python-psutil python-flask
-
-# Upgrade pip
-# RUN pip install --upgrade pip
-
-# Install Flask and psutil
-# RUN pip install flask
+# Install python packages (yum repolist command output ignored to bypass subscription-manager)
+RUN yum repolist > /dev/null && yum install -y  python-setuptools python-psutil python-flask stress 
 
 # Set the Flask app environment variable to the name of the flask app
 ENV FLASK_APP "/usr/bin/server.py"
@@ -34,8 +26,9 @@ ADD server.py /angry-canary/server.py
 
 # In order to drop the root user, we have to make some directories world
 # # writable as OpenShift default security model is to run the container under
-# # random UID.
-RUN chown -R 1001:0 /angry-canary && chmod -R ug+rwx /angry-canary
+# # random UID. +Changing permissions on log directory
+RUN chown -R 1001:0 /angry-canary && chmod -R ug+rwx /angry-canary 
+# RUN chown -R :1001 /var/log && chmod -R ug+rwx /var/log
 
 USER 1001
 
