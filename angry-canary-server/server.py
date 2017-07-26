@@ -57,4 +57,4 @@ def busy_work(workers):
 if __name__ == "__main__":
     process = os.popen("python busy_work.py", 'w', 1)
     process.write("1\n")
-    app.run(host='127.0.0.1')
+    app.run(host='0.0.0.0')

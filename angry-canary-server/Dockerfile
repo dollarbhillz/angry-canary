@@ -5,8 +5,8 @@ FROM rhel7:7.3-released
 MAINTAINER Benjamin Kincaid <bkincaid@redhat.com> \
            Benjamin Hills <bhills@redhat.com>
 
-LABEL com.redhat.component="angry-canary-docker"
-LABEL name="angry-canary-docker"
+LABEL com.redhat.component="angry-canary-server-docker"
+LABEL name="angry-canary-server-docker"
 LABEL version="0.1"
 LABEL io.k8s.description="Project UpShift Angry Canary server container image"
 LABEL summary="Container image for Project UpShift Angry Canary"
