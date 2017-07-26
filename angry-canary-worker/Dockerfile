@@ -17,13 +17,13 @@ LABEL description="Project UpShift Angry Canary worker container image"
 # Install python packages (yum repolist command output ignored to
 # # bypass subscription-manager)
 RUN yum repolist > /dev/null && yum install -y python-setuptools \
-                    python-psutil stress python-pip
+                    python-psutil stress
 
 # Upgrade pip
-RUN pip install --upgrade pip
+# RUN pip install --upgrade pip
 
 # Install python sys package
-RUN pip install sys
+# RUN pip install sys
 
 # Add the flask app file to the container in the /usr/bin directory
 ADD busy_work.py /angry-canary/busy_work.py
