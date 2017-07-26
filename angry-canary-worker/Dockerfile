@@ -9,21 +9,24 @@ LABEL com.redhat.component="angry-canary-worker-docker"
 LABEL name="angry-canary-worker-docker"
 LABEL version="0.1"
 LABEL io.k8s.description="Project UpShift Angry Canary worker container image"
-LABEL summary="Container image for Project UpShift Angry Canary worker"
-LABEL io.k8s.display-name="Angry Canary worker"
+LABEL summary="Worker container image for Project UpShift Angry Canary"
+LABEL io.k8s.display-name="Angry Canary Worker"
 LABEL description="Project UpShift Angry Canary worker container image"
 
 
 # Install python packages (yum repolist command output ignored to
 # # bypass subscription-manager)
-RUN yum repolist > /dev/null && yum install -y  python-setuptools \
-                    python-psutil python-flask stress
+RUN yum repolist > /dev/null && yum install -y python-setuptools \
+                    python-psutil stress python-pip
 
-# Set the Flask app environment variable to the name of the flask app
-ENV FLASK_APP "/usr/bin/server.py"
+# Upgrade pip
+RUN pip install --upgrade pip
+
+# Install python sys package
+RUN pip install sys
 
 # Add the flask app file to the container in the /usr/bin directory
-ADD server.py /angry-canary/server.py
+ADD busy_work.py /angry-canary/busy_work.py
 
 # In order to drop the root user, we have to make some directories world
 # # writable as OpenShift default security model is to run the container under
@@ -33,8 +36,8 @@ RUN chown -R 1001:0 /angry-canary && chmod -R ug+rwx /angry-canary
 
 USER 1001
 
-# Change directory to the place where we put the app
+# Change directory to the place where we put the worker
 RUN cd /angry-canary
 
-# Run dat flask app
-CMD python /angry-canary/server.py
+# Run dat worker
+CMD python /angry-canary/busy_work.py
