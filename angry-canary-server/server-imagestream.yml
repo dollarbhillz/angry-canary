@@ -4,13 +4,13 @@ kind: ImageStream
 metadata:
   annotations:
     openshift.io/image.insecureRepository: "true"
-  name: angry-canary-docker
+  name: angry-canary-server-docker
 spec:
-  dockerImageRepository: brew-pulp-docker01.web.prod.ext.phx2.redhat.com:8888/angry-canary-docker
+  dockerImageRepository: brew-pulp-docker01.web.prod.ext.phx2.redhat.com:8888/angry-canary-server-docker
   tags:
   - from:
       kind: DockerImage
-      name: brew-pulp-docker01.web.prod.ext.phx2.redhat.com:8888/angry-canary-docker:latest
+      name: brew-pulp-docker01.web.prod.ext.phx2.redhat.com:8888/angry-canary-server-docker:latest
     importPolicy:
       scheduled: true
       insecure: true
