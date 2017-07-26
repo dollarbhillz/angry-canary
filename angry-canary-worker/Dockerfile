@@ -15,7 +15,7 @@ LABEL description="Project UpShift Angry Canary worker container image"
 
 
 # Install python packages (yum repolist command output ignored to
-# bypass subscription-manager)
+# # bypass subscription-manager)
 RUN yum repolist > /dev/null && yum install -y  python-setuptools \
                     python-psutil python-flask stress
 

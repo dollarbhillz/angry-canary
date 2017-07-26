@@ -15,8 +15,10 @@ LABEL description="Project UpShift Angry Canary container image"
 # Metadata for exposed port for Flask App
 EXPOSE 5000
 
-# Install python packages (yum repolist command output ignored to bypass subscription-manager)
-RUN yum repolist > /dev/null && yum install -y  python-setuptools python-psutil python-flask stress
+# Install python packages (yum repolist command output ignored to
+# # bypass subscription-manager)
+RUN yum repolist > /dev/null && yum install -y  python-setuptools \
+                    python-psutil python-flask stress
 
 # Set the Flask app environment variable to the name of the flask app
 ENV FLASK_APP "/usr/bin/server.py"
