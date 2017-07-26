@@ -1,9 +1,0 @@
----
-- hosts: 192.168.122.101
-  remote_user: mr_provisioner
-  become: true
-  become_method: sudo
-  roles:
-    - role: common
-    - role: nginx
-    - role: flask_app

@@ -1,4 +1,0 @@
----
-# defaults file for flask_app
-flask_user: mr_flask
-flask_app_path: /srv/flask_app
