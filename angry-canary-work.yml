@@ -3,19 +3,19 @@
     time-tag:
       - week-day-load:
           # Every weekday starting at 9am
-          schedule: "0 9 * * 1-5 *"
+          schedule: "0 9 * * 1-5"
           scale: 1
       - week-night-load:
           # Every week night starting at 6pm
-          schedule: "0 18 * * 1-4 *"
+          schedule: "0 18 * * 1-4"
           scale: 15
       - week-end-load:
           # Every Friday at starting at 6pm, goes til Monday morning
-          schedule: "0 18 * * 5 *"
+          schedule: "0 18 * * 5"
           scale: 30
       - test-load:
           # Test every minute for debugging purposes
-          schedule: "* * * * * *"
+          schedule: "* * * * *"
           scale: 2
 
     jobs:
@@ -23,7 +23,7 @@
 
 - job-template:
     name: 'angry-canary-work-{time-tag}'
-    node: 'rcm-worker'
+    node: 'rcm-worker-1'
     project-type: freestyle
     defaults: global
     disabled: false
