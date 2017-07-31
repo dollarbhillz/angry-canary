@@ -15,7 +15,7 @@
           scale: 30
       - test-load:
           # Test every minute for debugging purposes
-          schedule: * * * * * *
+          schedule: "* * * * * *"
           scale: 2
 
     jobs:
