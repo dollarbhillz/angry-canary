@@ -7,20 +7,20 @@ spec:
     - type: "Pod"
       max:
         cpu: "2" 
-        memory: "1Gi" 
+        memory: "8Gi" 
       min:
         cpu: "200m" 
         memory: "6Mi" 
     - type: "Container"
       max:
         cpu: "2" 
-        memory: "1Gi" 
+        memory: "8Gi" 
       min:
         cpu: "100m" 
         memory: "4Mi" 
       default:
         cpu: "300m" 
-        memory: "200Mi" 
+        memory: "8Gi" 
       defaultRequest:
         cpu: "200m" 
         memory: "100Mi" 
