@@ -21,8 +21,6 @@ setuptools
 
 
 Server Dockerfile can be found in the angry-canary-server subdirectory.
-Worker Dockerfile can be found in the angry-canary-worker subdirectory.
-
 
 Documentation can be found here: https://mojo.redhat.com/docs/DOC-1144078-angry-canary-documentation-rcm
 
