@@ -2,22 +2,22 @@
 apiVersion: v1
 kind: BuildConfig
 metadata:
-  name: custom-jenkins-build
+  name: <name-build>
 spec:
   source:                       
     git:
-      uri: https://github.com/dollarbhillz/custom-jenkins-build
+      uri: <uri>
     type: Git
   strategy:                     
     sourceStrategy:
       from:
         kind: ImageStreamTag
-        name: jenkins-slave-base-rhel7:latest
-        namespace: openshift
+        name: <base-tag>:latest
+        namespace: <base-namespace>
     type: Source
   output:                       
     to:
       kind: ImageStreamTag
-      name: custom-jenkins:latest
+      name: <destination-tag>:latest
 
 

@@ -1,0 +1,23 @@
+---
+apiVersion: v1
+kind: BuildConfig
+metadata:
+  name: <name-build>
+spec:
+  source:                       
+    git:
+      uri: <uri>
+    type: Git
+  strategy:                     
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: <base-tag>:latest
+        namespace: <base-namespace>
+    type: Source
+  output:                       
+    to:
+      kind: ImageStreamTag
+      name: <destination-tag>:latest
+
+
