@@ -23,6 +23,6 @@ spec:
         memory: "8Gi" 
       defaultRequest:
         cpu: "0.1m" 
-        memory: "100Mi" 
+        memory: "512Mi" 
       maxLimitRequestRatio:
               cpu: "10"
