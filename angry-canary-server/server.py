@@ -28,33 +28,19 @@ def get_disk_io():
     return str(psutil.disk_usage()) + '\n'
 
 
-# Writes cpu, and memory metrics to a log file every 10ms. Currently, disk
-# metrics are commented out because they will not work when within a container.
-# This should maybe be another child process?
-@app.route('/log')
-def start_log():
-    logging.basicConfig(filename="health.log", level=logging.INFO)
-    while(True):
-        time.sleep(10)
+# Simulate work being done and then return
+@app.route('/do_work')
+def do_work():
+    fib(35)
 
-        cpu_stats = "cpu_stats: " + str(psutil.cpu_percent()) + "\n"
-        memory_stats = "memory_stats: " + str(psutil.virtual_memory()) + "\n"
-       # disk_stats = "disk_io: " + str(psutil.disk_usage()) + "\n"
+    return "work finished"
 
-        logging.info(cpu_stat)
-        logging.info(memory_stats)
-       # logging.info(disk_io)
-
-
-# begin simulating work
-@app.route('/busy_work/<workers>')
-def busy_work(workers):
-    #process = os.popen("python busy_work.py", 'w', 1)
-    #process.write(workers + '\n')
-    return "currently " + workers + " workers running"
+# Recursively computes Fibonacci numbers for the sake of fake work
+def fib(n):
+    if n <= 1:
+        return n
+    else:
 
 
 if __name__ == "__main__":
-    process = os.popen("python busy_work.py", 'w', 1)
-    process.write("1\n")
     app.run(host='0.0.0.0')
