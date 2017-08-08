@@ -1,12 +1,10 @@
 from flask import Flask
 from flask import request
-import os
-import psutil
-import time
-import logging
+
+import requests
+
 
 app = Flask(__name__)
-
 
 # Returns cpu metrics.
 @app.route('/cpu')
@@ -41,6 +39,17 @@ def fib(n):
         return n
     else:
 
+
+# Route hit by worker pods on success of busy work
+@app.route('/success')
+def success_query():
+    return "nice jorb"
+
+
+# Route hit by worker pods on failure of busy work
+@app.route('/fail')
+def success_query():
+    return "ur dumb"
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
