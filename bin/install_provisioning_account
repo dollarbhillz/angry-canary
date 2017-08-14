@@ -1,0 +1,43 @@
+#!/bin/sh
+
+#-------------------------------------------------------------------------------
+# creates and configures the initial provisioning user account on nodes
+# within the staging environment
+#-------------------------------------------------------------------------------
+if ! getent passwd "${PROVISION_USER}" > /dev/null; then
+    useradd -u 1100 "${PROVISION_USER}" || exit 1
+    echo "added provisioning user: ${PROVISION_USER}"
+fi
+
+home_dir=$(getent passwd "${PROVISION_USER}" | cut -d ':' -f 6)
+[ -d "${home_dir}" ] || exit 1
+echo "located provisioning user home: ${home_dir}"
+
+ssh_dir="${home_dir}/.ssh"
+sudo mkdir -p "${ssh_dir}" || exit 1
+echo "made provisioning user ssh dir: ${ssh_dir}"
+
+[ -d "${ssh_dir}" ] || exit 1
+sudo chown "${PROVISION_USER}":"${PROVISION_USER}" "${ssh_dir}" || exit 1
+echo "chowned ${ssh_dir} to: ${PROVISION_USER}"
+sudo chmod 0700 "${ssh_dir}" || exit 1
+echo "changed mode to 0700 on: ${ssh_dir}"
+
+provision_key="/home/vagrant/user_key"
+auth_keys="${ssh_dir}/authorized_keys"
+
+[ -f "${provision_key}" ] || exit 1
+cp "${provision_key}" "${auth_keys}" || exit 1
+echo "copied in provisioning key"
+sudo chown "${PROVISION_USER}":"${PROVISION_USER}" "${auth_keys}" || exit 1
+echo "chowned ${auth_keys} to: ${PROVISION_USER}"
+sudo chmod 0600 "${auth_keys}" || exit 1
+echo "changed mode to 0600 on: ${auth_keys}"
+# remove the remnant
+rm -f "${provision_key}" || exit 1
+
+sudoers_dir="/etc/sudoers.d"
+[ -d "${sudoers_dir}" ] || exit 1
+sudo_rule="%${PROVISION_USER} ALL=(ALL) NOPASSWD:ALL"
+echo "${sudo_rule}" > "${sudoers_dir}/${PROVISION_USER}" || exit 1
+echo "sudo rule installed for: ${PROVISION_USER}"
