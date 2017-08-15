@@ -32,6 +32,10 @@ for index, cpu in enumerate(cpu_percent) :
 #    return str(psutil.disk_usage()) + '\n'
 
 #Return all metrics
+while True :
+ cpu_percent = psutil.cpu_percent(interval = 1, percpu = True)
+ for index, cpu in enumerate(cpu_percent) :
+ client.push(MetricType.Gauge, 'cpu%s'% index, float(cpu))
 
 
 # Simulate work being done and then return
