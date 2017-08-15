@@ -1,45 +1,51 @@
 from flask import Flask
+
 from flask import request
 import os
 import psutil
 import time
 import logging
+from hawkular.metrics import HawkularMetricsClient, MetricType
+
 
 app = Flask(__name__)
 
 
-# Returns cpu metrics.
-@app.route('/cpu')
-def get_cpu_stats():
-    return str(psutil.cpu_times()) + '\n'
+# Get cpu metrics.
+#@app.route('/cpu')
+#def get_cpu_stats():
+cpu_percent = psutil.cpu_percent(interval = 1, percpu = True)
+for index, cpu in enumerate(cpu_percent) :
+ client.create_metric_definition(MetricType.Gauge, 'cpu%s' % index, cpu = 'cpu%s' % index)
+
+# Get memory metrics.
+#@app.route('/memory')
+#def get_memory_stats():
+#    return str(psutil.virtual_memory()) + '\n'
 
 
-# Returns memory metrics.
-@app.route('/memory')
-def get_memory_stats():
-    return str(psutil.virtual_memory()) + '\n'
-
-
-# Returns disk metrics
+# Get disk metrics
 # Warning: This does not currently work when within a container and will return
 # an internal server error
-@app.route('/disk')
-def get_disk_io():
-    return str(psutil.disk_usage()) + '\n'
+#@app.route('/disk')
+#def get_disk_io():
+#    return str(psutil.disk_usage()) + '\n'
+
+#Return all metrics
 
 
 # Simulate work being done and then return
-@app.route('/do_work')
-def do_work():
-    fib(35)
+#@app.route('/do_work')
+#def do_work():
+#    fib(35)
 
-    return "work finished"
+#    return "work finished"
 
 # Recursively computes Fibonacci numbers for the sake of fake work
-def fib(n):
-    if n <= 1:
-        return n
-    else:
+#def fib(n):
+#    if n <= 1:
+#        return n
+#    else:
 
 
 if __name__ == "__main__":
