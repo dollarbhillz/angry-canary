@@ -1,17 +1,6 @@
-from flask import Flask
-from flask import request
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy 
 
-
-app = Flask(__name__)
-
-# Provides more robust error messages for the purpose of debugging
-app.config['DEBUG'] = True
-
-# SQLAlchemy Configuration
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://angry-canary-app-admin:password@localhost:5432/test'
-db = SQLAlchemy(app)
-
+db = SQLAlchemy()
 
 # Schema defining results of a particular build
 # Plural?, Camel Case?
@@ -92,17 +81,3 @@ class Build_Instances(db.Model):
     def __repr__(self):
         return '<build_instances %d>' % self.id
 
-
-# Route hit by worker pods on success of busy work
-@app.route('/success')
-def success_query():
-    return "nice jorb"
-
-
-# Route hit by worker pods on failure of busy work
-@app.route('/fail')
-def fail_query():
-    return "ur dumb"
-
-if __name__ == "__main__":
-    app.run(host='0.0.0.0')
