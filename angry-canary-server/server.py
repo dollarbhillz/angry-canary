@@ -10,6 +10,8 @@ from hawkular.metrics import HawkularMetricsClient, MetricType
 
 app = Flask(__name__)
 
+#Create client object
+client = HawkularMetricsClient(tenant_id='test')
 
 # Get cpu metrics.
 #@app.route('/cpu')
