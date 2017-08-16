@@ -64,16 +64,13 @@ class Build_Instances(db.Model):
 
     # relates to id of build_runs table
     build_run_id = db.Column(db.Integer, db.ForeignKey("build_runs.id"))
-    build_runs = db.relationship('Build_Runs',
-            backref=db.backref('build_instances', lazy='dynamic'))
 
     podname = db.Column(db.String(50))
     start_time = db.Column(db.Integer)
     end_time = db.Column(db.Integer)
 
-    def __init__(self, build_run_id, build_runs, podname, start_time, end_time):
+    def __init__(self, build_run_id, podname, start_time, end_time):
         self.build_run_id = build_run_id
-        self.build_runs = build_runs
         self.podname = podname
         self.start_time = start_time
         self.end_time = end_time
