@@ -18,7 +18,7 @@ client = HawkularMetricsClient(tenant_id='test')
 #def get_cpu_stats():
 cpu_percent = psutil.cpu_percent(interval = 1, percpu = True)
 for index, cpu in enumerate(cpu_percent) :
- client.create_metric_definition(MetricType.Gauge, 'cpu%s' % index, cpu = 'cpu%s' % index)
+    client.create_metric_definition(MetricType.Gauge, 'cpu%s' % index, cpu = 'cpu%s' % index)
 
 # Get memory metrics.
 #@app.route('/memory')
@@ -35,9 +35,9 @@ for index, cpu in enumerate(cpu_percent) :
 
 #Return all metrics
 while True :
- cpu_percent = psutil.cpu_percent(interval = 1, percpu = True)
- for index, cpu in enumerate(cpu_percent) :
- client.push(MetricType.Gauge, 'cpu%s'% index, float(cpu))
+    cpu_percent = psutil.cpu_percent(interval = 1, percpu = True)
+    for index, cpu in enumerate(cpu_percent) :
+        client.push(MetricType.Gauge, 'cpu%s'% index, float(cpu))
 
 
 # Simulate work being done and then return
