@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from dateutil import parser
-from hawkular.metrics import HawkularMetricsClient, MetricType
+#from hawkular.metrics import HawkularMetricsClient, MetricType
 from flask_sqlalchemy import SQLAlchemy
 
 
