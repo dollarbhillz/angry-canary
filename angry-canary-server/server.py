@@ -1,17 +1,17 @@
-from flask import Flask
-from flask import request
-import os
-import psutil
-import time
-import logging
+from flask import Flask, jsonify, request
+from dateutil import parser
 from hawkular.metrics import HawkularMetricsClient, MetricType
 from flask_sqlalchemy import SQLAlchemy
 
 
 app = Flask(__name__)
 
+
 # Provides more robust error messages for the purpose of debugging
-app.config['DEBUG'] = True
+#app.config['DEBUG'] = True
+
+# Disable track modifications
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # SQLAlchemy Configuration
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://angry-canary-app-admin:password@localhost:5432/test'
@@ -78,18 +78,66 @@ class BuildInstance(db.Model):
         return '<build_instance %d>' % self.id
 
 
-# Route hit by worker pods on success of busy work
-@app.route('/success')
-def success_query():
-    return "nice jorb"
+
+# Route to add new BuildRuns into the database 
+@app.route('/build_run', methods=['POST'])
+def build_run_func():
+
+    build_run = BuildRun(builder_name=request.json['builder_name'],
+            start_time=parser.parse(request.json['start_time']),
+            end_time=parser.parse(request.json['end_time']))
+
+    db.session.add(build_run)
+
+    db.session.commit()
+
+    return "success"
 
 
 
+# Route to add new BuildInstances with associated BuildRun
+@app.route('/build_instance', methods=['POST'])
+def build_instance_func():
+   
+    build_name = str(request.json['builder_name'])
 
-# Route hit by worker pods on failure of busy work
-@app.route('/fail')
-def fail_query():
-    return "ur dumb"
+    build_id = BuildRun.query.filter_by(builder_name=build_name).first().id
+
+    build_instance = BuildInstance(build_run_id=build_id,
+            pod_name=request.json['pod_name'],
+            start_time=parser.parse(request.json['start_time']),
+            end_time=parser.parse(request.json['end_time']))
+
+    db.session.add(build_instance)
+
+    db.session.commit()
+
+    return "success"
+
+
+# Route to add new BuildInstances with associated BuildRun
+@app.route('/build_result', methods=['POST'])
+def build_result_func():
+   
+    pod = str(request.json['pod_name'])
+
+    instance_id = BuildInstance.query.filter_by(pod_name=pod).first().id
+
+    build_result = BuildResult(build_instance_id=instance_id,
+            success=request.json['success'],
+            reason=request.json['reason'])
+
+    db.session.add(build_result)
+
+    db.session.commit()
+
+    return "success"
+
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='127.0.0.1')
