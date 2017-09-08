@@ -1,18 +1,16 @@
 # Welcome to the Angry Canary Project
-
-This project is an RCM internal project to test the UpShift environment for
-stability and uptime.
-
+This project was originally a Red Hat internal project, but I'm open-sourcing
+as much as I can to share with the greater community as a whole.
 
 ## Required Packages/Tools
 
 - oc
-- rhpkg
+- I originally used an internal build system, so building the container image
+  is an exercise left to the reader.
 
 ## Main files in repo (inside angry-canary-server subdir)
 - Dockerfile
-Dockerfile for building in dist-git, also stored in the
-angry-canary-server-docker repo in dist-git
+Dockerfile for building the container
 
 - server.py
 Source code for the Flask app running on the server pod
@@ -34,9 +32,6 @@ This is the image stream for the version of Postgres we are using for the
 database pod.
 
 ### Inside angry-canary-server subdir. . .
-
-- server-imagestream.yml
-Configuration for pulling server container image from OSBS
 
 - db_test_script.py
 Adds a few example rows into each table inside the database.
